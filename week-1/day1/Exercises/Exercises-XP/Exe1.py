@@ -1,0 +1,1 @@
+print("\n".join(["Hello world"] * 4))

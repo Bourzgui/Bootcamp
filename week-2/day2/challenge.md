@@ -1,4 +1,4 @@
- 
+ # 🚀 Daily challenge : SQL Puzzle
 | **FirstTab** |        |
 |-------------|--------|
 | ID         | Name   |
@@ -79,5 +79,4 @@ WHERE ft.id NOT IN ( SELECT id FROM SecondTab WHERE id IS NOT NULL )
 | **Q4** | `2` |
 
 ---
-
-💡 **Prochaine Étape :** Exécuter les requêtes pour valider ces résultats. Dis-moi si tu veux que je t'explique comment tester ces requêtes ! 🚀
+ 

@@ -54,5 +54,12 @@ WHERE ft.id NOT IN ( SELECT id FROM SecondTab WHERE id IS NOT NULL )
 | **Q3** | `0` |
 | **Q4** | `2` |
 
----
+------
+ 
+=======
+## 🚀OUTPUT 
+![Local Image](./data-1.csv)
+![Local Image](./data-2.csv)
+![Local Image](./data-3.csv)
+![Local Image](./data-4.csv)
  

@@ -37,6 +37,21 @@ WHERE rental_rate > (SELECT MAX(rental_rate)
                      FROM (SELECT rental_rate FROM film ORDER BY rental_rate ASC LIMIT 10) AS cheapest_movies)
 ORDER BY rental_rate ASC 
 LIMIT 10;
+--BONUS
+SELECT film_id, title, rental_rate 
+FROM film f
+WHERE rental_rate > (
+    SELECT MAX(rental_rate)
+    FROM film
+    WHERE rental_rate IN (
+        SELECT rental_rate
+        FROM film
+        ORDER BY rental_rate ASC
+        OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+    )
+)
+ORDER BY rental_rate ASC;
+
 --12
 SELECT c.customer_id, c.first_name, c.last_name, p.amount, p.payment_date 
 FROM customer c

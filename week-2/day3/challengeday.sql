@@ -18,7 +18,7 @@ RETURNS NUMERIC(10,2) AS $$
 DECLARE 
     total_price NUMERIC(10,2);
 BEGIN
-    SELECT COALESCE(SUM(quantity * price), 0) INTO total_price
+    SELECT COALESCE(SUM(quantity * price), 0) INTO total_price -- 
     FROM items
     WHERE order_id = order_id_param;
     

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Défi : Système Solaire Interactif</title>
+        <style>
+            body {
+                background-color: black;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                font-family: Arial, sans-serif;
+            }
+
+            header {
+                background: rgba(0, 0, 50, 0.8);
+                color: white;
+                padding: 20px;
+                text-align: center;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            }
+
+            footer {
+                background: rgba(0, 0, 50, 0.8);
+                color: white;
+                padding: 10px;
+                text-align: center;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                border-top: 2px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .listPlanets {
+                display: flex;
+                gap: 50px;
+                padding: 40px;
+                position: relative;
+                height: calc(100vh - 120px); /* Ajusté pour header et footer */
+                overflow: hidden;
+            }
+
+            .planet {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                position: absolute;
+                border: 3px solid rgba(255, 255, 255, 0.8);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+                filter: blur(1px);
+                cursor: pointer;
+                transition: transform 0.3s;
+            }
+
+            .planet:hover {
+                transform: scale(1.1);
+                z-index: 10;
+            }
+
+            .moon {
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background: rgb(237, 237, 237);
+                border: 2px solid rgba(255, 0, 0, 0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+                filter: blur(0.5px);
+            }
+
+            .info {
+                position: absolute;
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 14px;
+                display: none;
+            }
+
+            @keyframes orbitMoon {
+                from { transform: rotate(0deg) translateX(70px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Système Solaire Interactif</h1>
+        </header>
+
+        <section class="listPlanets"></section>
+
+        <footer>
+            <p>&copy; 2025 Système Solaire - Simulation interactive des planètes et leurs orbites</p>
+        </footer>
+
+        <script>
+            const systemeSolaire = [
+                { nom: "Mercure", couleur: "#808080", distance: 100, vitesse: 4.15, info: "Plus petite planète", lunes: [] },
+                { nom: "Vénus", couleur: "#FFA500", distance: 150, vitesse: 1.62, info: "Planète la plus chaude", lunes: [] },
+                { nom: "Terre", couleur: "#0000FF", distance: 200, vitesse: 1, info: "Notre maison", lunes: [{ nom: "Lune" }] },
+                { nom: "Mars", couleur: "#FF0000", distance: 250, vitesse: 0.53, info: "Planète rouge", lunes: [{ nom: "Phobos" }, { nom: "Deimos" }] },
+                { nom: "Jupiter", couleur: "#FFA07A", distance: 350, vitesse: 0.084, info: "Plus grande planète", lunes: [{ nom: "Io" }, { nom: "Europe" }, { nom: "Ganymède" }, { nom: "Callisto" }] },
+                { nom: "Saturne", couleur: "#FFD700", distance: 450, vitesse: 0.034, info: "Anneaux célèbres", lunes: [{ nom: "Titan" }, { nom: "Encelade" }, { nom: "Mimas" }] },
+                { nom: "Uranus", couleur: "#00CED1", distance: 550, vitesse: 0.012, info: "Planète inclinée", lunes: [{ nom: "Titania" }, { nom: "Obéron" }] },
+                { nom: "Neptune", couleur: "#00008B", distance: 650, vitesse: 0.006, info: "Vents puissants", lunes: [{ nom: "Triton" }] }
+            ];
+
+            const sectionPlanetes = document.querySelector(".listPlanets");
+            let time = 0;
+
+            systemeSolaire.forEach((planete) => {
+                // Création de la planète
+                const divPlanete = document.createElement("div");
+                divPlanete.classList.add("planet");
+                divPlanete.style.backgroundColor = planete.couleur;
+                divPlanete.textContent = planete.nom;
+
+                // Création de l'info-bulle
+                const infoDiv = document.createElement("div");
+                infoDiv.classList.add("info");
+                infoDiv.textContent = planete.info;
+                divPlanete.appendChild(infoDiv);
+
+                // Affichage de l'info au survol
+                divPlanete.addEventListener("mouseover", () => infoDiv.style.display = "block");
+                divPlanete.addEventListener("mouseout", () => infoDiv.style.display = "none");
+
+                // Ajout des lunes
+                planete.lunes.forEach((lune, indexLune) => {
+                    const divLune = document.createElement("div");
+                    divLune.classList.add("moon");
+                    divLune.textContent = lune.nom;
+                    divLune.style.animation = `orbitMoon ${5 + indexLune}s linear infinite`;
+                    divPlanete.appendChild(divLune);
+                });
+
+                sectionPlanetes.appendChild(divPlanete);
+            });
+
+            // Animation du système solaire
+            function animateSolarSystem() {
+                time += 0.01;
+                const planets = document.querySelectorAll(".planet");
+                
+                systemeSolaire.forEach((planete, index) => {
+                    const angle = time * planete.vitesse;
+                    const x = window.innerWidth / 2 + Math.cos(angle) * planete.distance;
+                    const y = window.innerHeight / 2 + Math.sin(angle) * planete.distance;
+                    
+                    planets[index].style.left = `${x - 50}px`; // -50 pour centrer
+                    planets[index].style.top = `${y - 50}px`;
+                    
+                    // Position de l'info-bulle
+                    planets[index].querySelector(".info").style.top = "-40px";
+                    planets[index].querySelector(".info").style.left = "50%";
+                    planets[index].querySelector(".info").style.transform = "translateX(-50%)";
+                });
+
+                requestAnimationFrame(animateSolarSystem);
+            }
+            animateSolarSystem();
+        </script>
+    </body>
+</html>

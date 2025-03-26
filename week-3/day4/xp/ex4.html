@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Handling & Bold Text</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #218838;
+        }
+        ul.usersAnswer {
+            list-style: none;
+            padding: 0;
+        }
+        ul.usersAnswer li {
+            background: white;
+            margin: 5px auto;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        p#text-paragraph {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <form id="user-form">
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="firstname"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lastname"><br><br>
+        <input type="submit" value="Submit" id="submit">
+    </form> 
+    <ul class="usersAnswer"></ul>
+
+    <p id="text-paragraph">
+        <strong>Hello</strong> I hope you are enjoying <strong>this</strong> class. At the
+        <strong>end</strong> you <strong>will</strong> be great Developers!
+        <strong>Enjoy</strong> the <strong>JavaScript </strong> lessons
+    </p>
+
+    <form id="sphere-form">
+        <p>Input radius value and get the volume of a sphere.</p>
+        <label for="radius">Radius:</label>
+        <input type="text" name="radius" id="radius" required>
+        <label for="volume">Volume:</label>
+        <input type="text" name="volume" id="volume" readonly>
+        <input type="submit" value="Calculate">
+    </form>
+    
+    <script>
+        // Retrieve and log the form
+        const form = document.getElementById("user-form");
+        console.log(form);
+        
+        // Retrieve inputs by ID and log them
+        const fnameInput = document.getElementById("fname");
+        const lnameInput = document.getElementById("lname");
+        console.log(fnameInput, lnameInput);
+        
+        // Retrieve inputs by name attribute and log them
+        const fnameByName = document.getElementsByName("firstname")[0];
+        const lnameByName = document.getElementsByName("lastname")[0];
+        console.log(fnameByName, lnameByName);
+        
+        // Handle form submission
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the default form submission
+            
+            const firstName = fnameInput.value.trim();
+            const lastName = lnameInput.value.trim();
+            
+            if (firstName === "" || lastName === "") {
+                alert("Both fields are required!");
+                return;
+            }
+            
+            const usersAnswer = document.querySelector(".usersAnswer");
+            usersAnswer.innerHTML = ""; // Clear previous entries
+            
+            const firstLi = document.createElement("li");
+            firstLi.textContent = firstName;
+            
+            const lastLi = document.createElement("li");
+            lastLi.textContent = lastName;
+            
+            usersAnswer.appendChild(firstLi);
+            usersAnswer.appendChild(lastLi);
+        });
+
+        // Global variable to store bold elements
+        let allBoldItems;
+
+        // Function to get all bold items
+        function getBoldItems() {
+            allBoldItems = document.querySelectorAll("#text-paragraph strong");
+        }
+
+        // Function to highlight bold text
+        function highlight() {
+            allBoldItems.forEach(item => item.style.color = "blue");
+        }
+
+        // Function to return bold text to default
+        function returnItemsToDefault() {
+            allBoldItems.forEach(item => item.style.color = "black");
+        }
+
+        // Initialize bold items
+        getBoldItems();
+
+        // Event listeners for hover effects
+        const paragraph = document.getElementById("text-paragraph");
+        paragraph.addEventListener("mouseover", highlight);
+        paragraph.addEventListener("mouseout", returnItemsToDefault);
+
+        // Calculate sphere volume
+        document.getElementById("sphere-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const radius = parseFloat(document.getElementById("radius").value);
+            if (isNaN(radius) || radius <= 0) {
+                alert("Please enter a valid radius");
+                return;
+            }
+            const volume = (4/3) * Math.PI * Math.pow(radius, 3);
+            document.getElementById("volume").value = volume.toFixed(2);
+        });
+    </script>
+</body>
+</html>

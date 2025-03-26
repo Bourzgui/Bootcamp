@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Handling</title>
+</head>
+<body>
+    <form id="user-form">
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="firstname"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lastname"><br><br>
+        <input type="submit" value="Submit" id="submit">
+    </form> 
+    <ul class="usersAnswer"></ul>
+    
+    <script>
+        // Retrieve and log the form
+        const form = document.getElementById("user-form");
+        console.log(form);
+        
+        // Retrieve inputs by ID and log them
+        const fnameInput = document.getElementById("fname");
+        const lnameInput = document.getElementById("lname");
+        console.log(fnameInput, lnameInput);
+        
+        // Retrieve inputs by name attribute and log them
+        const fnameByName = document.getElementsByName("firstname")[0];
+        const lnameByName = document.getElementsByName("lastname")[0];
+        console.log(fnameByName, lnameByName);
+        
+        // Handle form submission
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the default form submission
+            
+            const firstName = fnameInput.value.trim();
+            const lastName = lnameInput.value.trim();
+            
+            if (firstName === "" || lastName === "") {
+                alert("Both fields are required!");
+                return;
+            }
+            
+            const usersAnswer = document.querySelector(".usersAnswer");
+            usersAnswer.innerHTML = ""; // Clear previous entries
+            
+            const firstLi = document.createElement("li");
+            firstLi.textContent = firstName;
+            
+            const lastLi = document.createElement("li");
+            lastLi.textContent = lastName;
+            
+            usersAnswer.appendChild(firstLi);
+            usersAnswer.appendChild(lastLi);
+        });
+    </script>
+</body>
+</html>

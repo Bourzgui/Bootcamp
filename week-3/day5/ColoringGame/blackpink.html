@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACKPINK Drumset Game & Discography</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://img.barks.jp/img/article/1000234171/H/1200.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+            overflow-y: auto;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            animation: shine 5s infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        h1 {
+            font-size: 3em;
+            color: #f5e5ed;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 25px rgba(255, 255, 255, 0.5);
+            margin-top: 30px;
+            animation: glow 1s infinite alternate;
+            position: relative;
+            z-index: 1;
+        }
+        h2{
+            font-size: 2.5em;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 25px rgba(255, 255, 255, 0.5);
+            animation: glow 1s infinite alternate;
+            position: relative;
+            z-index: 1;
+        }
+        p, .proverb, .album-section, .video-section {
+            font-size: 1.2em;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        .proverb {
+            font-style: italic;
+            color: #f1a9d0;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 25px rgba(255, 255, 255, 0.5);
+            animation: glow 1s infinite alternate;
+        }
+        .drum-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        .drum {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #000000, #ff1493);
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            border: 3px solid #fff;
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 20, 147, 0.7);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .drum:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 105, 180, 1), 0 0 35px rgba(255, 255, 255, 0.5);
+        }
+        .drum:active {
+            background: linear-gradient(45deg, #ff1493, #000000);
+            transform: scale(0.95);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+        }
+        .album-section {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+        .album-section h2 {
+            color: #faf6f8;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+        }
+        .album-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .album-section th, .album-section td {
+            padding: 10px;
+            border: 1px solid #fff;
+            text-align: center;
+        }
+        .album-section th {
+            background: linear-gradient(45deg, #ff1493, #000000);
+            color: #fff;
+        }
+        .album-section img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .video-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+        .video-section iframe {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            border: none;
+            border-radius: 10px;
+        }
+        footer {
+            
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            margin-top: 40px;
+          
+        }
+        footer a {
+            color: #ff69b4;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+            transition: color 0.3s;
+            box-shadow: 0 5px 20px rgba(245, 151, 201, 0.7);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        @keyframes shine {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.3; }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); }
+            100% { text-shadow: 0 0 20px rgba(255, 105, 180, 1), 0 0 30px rgba(255, 255, 255, 0.7); }
+        }
+    </style>
+</head>
+<body>
+    <h1>BLACKPINK</h1>
+    <p>Click to vibe with BLACKPINK!</p>
+    <div class="proverb">"In your area, we shine brighter than the stars." – BLACKPINK</div>
+    <div class="drum-container">
+        <button class="drum" data-key="B">B</button>
+        <button class="drum" data-key="L">L</button>
+        <button class="drum" data-key="A">A</button>
+        <button class="drum" data-key="C">C</button>
+        <button class="drum" data-key="K">K</button>
+        <button class="drum" data-key="P">P</button>
+        <button class="drum" data-key="I">I</button>
+        <button class="drum" data-key="N">N</button>
+        <button class="drum" data-key="K">K</button>
+          
+    </div>
+    
+    <audio id="sound-A" src="sounds/kick.wav"></audio>
+    <audio id="sound-S" src="sounds/snare.wav"></audio>
+    <audio id="sound-D" src="sounds/hihat.wav"></audio>
+    <audio id="sound-F" src="sounds/tom.wav"></audio>
+
+    <div class="video-section">
+        <h2>BLACKPINK</h2>
+        <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/32si5cfrCNc?autoplay=1&mute=1" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    
+    
+
+    <div class="album-section">
+        <h2>Albums Studio</h2>
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Détails</th>
+                <th>Classements</th>
+                <th>Ventes</th>
+            </tr>
+            <tr>
+                <td><img src="https://media.s-bol.com/BrzR6GMOq5ko/1200x1200.jpg" alt="The Album"></td>
+                <td><strong>The Album</strong><br>Sorti le 2 octobre 2020, cet album studio a atteint la première place en Corée du Sud et s'est classé deuxième aux États-Unis. Il comprend des titres phares tels que "How You Like That" et "Lovesick Girls</td>
+                <td>COR: 1<br>JAP: 3<br>ALL: 7<br>FRA: 11<br>GBR: 2<br>CAN: 5<br>USA: 2</td>
+                <td>COR: +1,610,000<br>USA: +117,000<br>JAP: +74,000</td>
+            </tr>
+            <tr>
+                <td><img src="https://daebak.tokyo/wp-content/uploads/2022/08/93.jpg" alt="Born Pink"></td>
+                <td><strong>Born Pink</strong><br>Publié le 16 septembre 2022, ce second album studio a dominé les classements dans plusieurs pays, atteignant la première place aux États-Unis, au Royaume-Uni et en Corée du Sud. Il inclut des morceaux populaires comme "Pink Venom" et "Shut Down".</td>
+                <td>COR: 1<br>JAP: 4<br>ALL: 3<br>FRA: 3<br>GBR: 1<br>CAN: 1<br>USA: 1</td>
+                <td>COR: +2,780,000<br>USA: +101,500<br>JAP: +31,000</td>
+            </tr>
+        </table>
+    </div>
+
+    <footer>
+        <a href="https://www.instagram.com/blackpinkofficial/" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/BLACKPINKOFFICIAL/" target="_blank">Facebook</a>
+        <a href="https://www.youtube.com/@BLACKPINK" target="_blank">YouTube</a>
+    </footer>
+    
+    <script>
+        function playSound(key) {
+            const audio = document.getElementById(`sound-${key}`);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play();
+            }
+        }
+        
+        document.querySelectorAll(".drum").forEach(button => {
+            button.addEventListener("click", () => {
+                playSound(button.getAttribute("data-key"));
+            });
+        });
+        
+        document.addEventListener("keydown", (event) => {
+            playSound(event.key.toUpperCase());
+        });
+    </script>
+</body>
+</html>

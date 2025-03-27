@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Colors</title>
+</head>
+<body>
+
+    <form>
+        <select id="colorSelect">
+            <option>Red</option>
+            <option>Green</option>
+            <option>White</option>
+            <option>Black</option>
+        </select>
+        <input type="button" value="Select and Remove" onclick="removecolor()">
+    </form>
+
+    <script>
+        function removecolor() {
+            const select = document.getElementById("colorSelect");
+            if (select.selectedIndex !== -1) {
+                select.remove(select.selectedIndex);
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drumset Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://book.impress.co.jp/items/img/bg06_decoration-part_07.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #f1bff3;
+            text-shadow: 0 0 10px rgba(240, 159, 203, 0.5);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #bdbdbd;
+            margin-bottom: 30px;
+        }
+
+        .drum-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .drum {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #333;
+            color: white;
+            border: 3px solid #f896db;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 0 15px rgba(235, 138, 227, 0.3);
+        }
+ 
+        .drum:hover {
+            transform: scale(1.05);
+            background: #e98bd9;
+            box-shadow: 0 0 20px rgba(236, 141, 216, 0.7);
+        }
+
+        .drum:active {
+            transform: scale(0.95);
+            background: #e472e4;
+        }
+
+        h2 {
+            color: #e472e4;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        #taskForm {
+            margin-bottom: 20px;
+        }
+
+        #taskInput {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #663751;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1rem;
+        }
+
+        #taskForm button {
+            padding: 10px 20px;
+            background: #eb7cb9;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+
+        #taskForm button:hover {
+            background: #ee89c1;
+        }
+
+        .listTasks {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e087b8;
+        }
+
+        .taskItem {
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .taskItem button {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .drum-container {
+                gap: 10px;
+            }
+            
+            .drum {
+                width: 80px;
+                height: 80px;
+                font-size: 1.5rem;
+            }
+            
+            #taskInput {
+                width: 200px;
+            }
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>TO DO LIST</h1>
+    <p></p>
+    <div class="drum-container">
+        <button class="drum" data-key="T">T</button>
+        <button class="drum" data-key="O">O</button>
+        <button class="drum" data-key="D">D</button>
+        <button class="drum" data-key="O">O</button>
+    </div>
+    
+    <audio id="sound-T" src="https://pixabay.com/sound-effects/just-do-ok-72200/"></audio>
+    <audio id="sound-O" src="sounds/snare.wav"></audio>
+    <audio id="sound-D" src="sounds/hihat.wav"></audio>
+    <audio id="sound-O" src="sounds/tom.wav"></audio>
+    
+    <h2>To-Do List</h2>
+    <form id="taskForm">
+        <input type="text" id="taskInput" placeholder="Ajouter une tâche">
+        <button type="submit">Ajouter</button>
+    </form>
+    <div class="listTasks"></div>
+    
+    <script src="script.js"></script>
+    <script>
+        function playSound(key) {
+            const audio = document.getElementById(`sound-${key}`);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play();
+            }
+        }
+        
+        document.querySelectorAll(".drum").forEach(button => {
+            button.addEventListener("click", () => {
+                playSound(button.getAttribute("data-key"));
+            });
+        });
+        
+        document.addEventListener("keydown", (event) => {
+            playSound(event.key.toUpperCase());
+        });
+
+        // Gestion de la To-Do List
+        document.getElementById('taskForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+            
+            if (taskText) {
+                const taskItem = document.createElement('div');
+                taskItem.className = 'taskItem';
+                
+                const taskSpan = document.createElement('span');
+                taskSpan.textContent = taskText;
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Supprimer';
+                deleteBtn.addEventListener('click', function() {
+                    taskItem.remove();
+                });
+                
+                taskItem.appendChild(taskSpan);
+                taskItem.appendChild(deleteBtn);
+                
+                document.querySelector('.listTasks').appendChild(taskItem);
+                
+                taskInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

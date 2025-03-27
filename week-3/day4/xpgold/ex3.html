@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        ul { list-style: none; padding: 0; }
+        li { background: #f4f4f4; margin: 5px; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script>
+        let shoppingList = [];
+
+        // Créer le formulaire
+        const root = document.getElementById("root");
+        const form = document.createElement("form");
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "Enter item...";
+        const addButton = document.createElement("button");
+        addButton.textContent = "Add Item";
+        const clearButton = document.createElement("button");
+        clearButton.textContent = "Clear All";
+        
+        form.appendChild(input);
+        form.appendChild(addButton);
+        root.appendChild(form);
+        root.appendChild(clearButton);
+
+        // Créer la liste
+        const ul = document.createElement("ul");
+        root.appendChild(ul);
+
+        // Ajouter un élément à la liste
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            addItem();
+        });
+
+        function addItem() {
+            const item = input.value.trim();
+            if (item !== "") {
+                shoppingList.push(item);
+                updateList();
+                input.value = "";
+            }
+        }
+
+        function updateList() {
+            ul.innerHTML = "";
+            shoppingList.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.textContent = item;
+                ul.appendChild(li);
+            });
+        }
+
+        // Supprimer tous les éléments
+        clearButton.addEventListener("click", function() {
+            shoppingList = [];
+            updateList();
+        });
+
+    </script>
+
+</body>
+</html>

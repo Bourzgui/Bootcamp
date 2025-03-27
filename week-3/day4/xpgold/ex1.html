@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Selector</title>
+</head>
+<body>
+
+    <select id="genres">
+        <option value="rock">Rock</option>
+        <option value="blues" selected>Blues</option>
+    </select>
+    <p>Selected genre: <span id="selectedGenre"></span></p>
+
+    <script>
+        const select = document.getElementById("genres");
+        const selectedGenre = document.getElementById("selectedGenre");
+
+        // Afficher la valeur sélectionnée par défaut
+        selectedGenre.textContent = select.value;
+
+        // Ajouter une nouvelle option et la sélectionner par défaut
+        const newOption = document.createElement("option");
+        newOption.value = "classic";
+        newOption.textContent = "Classic";
+        newOption.selected = true;
+        select.appendChild(newOption);
+
+        // Mettre à jour l'affichage lorsque l'utilisateur change d'option
+        select.addEventListener("change", () => {
+            selectedGenre.textContent = select.value;
+        });
+    </script>
+
+</body>
+</html>
